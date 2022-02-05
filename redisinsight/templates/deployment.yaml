@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redisinsight-{{ .Release.Name }}
+  name: redisinsight-{{ .Release.Name }}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redisinsight-{{ .Release.Name }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redisinsight-{{ .Release.Name }}
+    spec:
+      initContainers:
+        - name: startup
+          image: busybox
+          command: [ sh, '-c', 'chown -R 1001 /db']
+          volumeMounts:
+            - name: data
+              mountPath: /db
+      containers:
+      - image:  {{ .Values.redisinsight_image }}
+        name: redisinsight-{{ .Release.Name }}
+        resources: {}
+        ports:
+         - containerPort: {{ .Values.redisinsight_port }}
+           protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /db
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: redisinsight-{{ .Release.Name }}
+
+
