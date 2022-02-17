@@ -1,0 +1,15 @@
+{{ .Release.Name }}Version: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: Helm
+  name: {{ .Release.Name }}
+spec:
+  ports:
+  - port: {{ .Values.api_port }}
+  selector:
+    app: {{ .Release.Name }}
+status:
+  loadBalancer: {}

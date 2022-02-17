@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      {{- if .Values.redis_config }} 
+      volumes:
+        - name: config
+          secret:
+            secretName: {{ .Release.Name }}
+      {{- end }}
+      containers:
+      - image: {{ .Values.api_image }}
+        name: {{ .Release.Name }}
+        {{ if .Values.api_resources }}
+        {{- with .Values.api_resources }}
+        resources:
+          limits:
+            cpu: {{.cpu | default "2m" }} 
+        {{- end }}
+        {{ end }}
+        {{- if .Values.redis_config }}
+        volumeMounts:
+          - name: config
+            mountPath: /usr/src/app/config.yaml
+            subPath: config.yaml
+        {{- end }}
+status: {}

@@ -1,0 +1,2 @@
+this is the command you use to insert data into redis:
+  curl --header "Content-Type: application/json" -XPOST --data '{"name":"Omar", "city":"Rabat", "age":"25"}' "10.103.9.126:8089/api /v1/insert"
