@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis
+    spec:
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: config-{{ .Release.Name }}
+            items:
+              - key: redis-config
+                path: redis.conf
+      containers:
+      - command:
+        - redis-server
+        - "/redis-master/redis.conf"
+        - "--requirepass {{ .Values.redis_password }}"
+        image: redis:5.0.4
+        name: redis
+        env:
+         - name: MASTER
+           value: "true"
+         - name: REDIS_PASSWORD
+           value: {{ .Values.redis_password }}
+        ports:
+        - containerPort: 6379
+        resources:
+          limits: 
+            cpu: "0.1"
+        volumeMounts:
+          - mountPath: /redis-master
+            name: config
+          - mountPath: /redis-data
+            name: data
+      
+     
+
+status: {}

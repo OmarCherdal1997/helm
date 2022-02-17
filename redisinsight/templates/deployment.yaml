@@ -6,7 +6,7 @@ metadata:
     app: redisinsight-{{ .Release.Name }}
   name: redisinsight-{{ .Release.Name }}
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicaNumber }}
   selector:
     matchLabels:
       app: redisinsight-{{ .Release.Name }}

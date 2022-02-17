@@ -1,2 +1,3 @@
 redisinsight_image: redislabs/redisinsight
 redisinsight_port: 8001
+replicaNumber: 2
