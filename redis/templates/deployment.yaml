@@ -19,7 +19,15 @@ spec:
     spec:
       volumes:
         - name: data
+          {{ with .Values.redisStorage }}
+          {{ if eq .isPersisted true }}
+          nfs:
+            server: {{ .serverIP }}
+            path: {{ .path }}
+          {{ else }}
           emptyDir: {}
+          {{ end }} 
+          {{ end }}
         - name: config
           configMap:
             name: config-{{ .Release.Name }}
