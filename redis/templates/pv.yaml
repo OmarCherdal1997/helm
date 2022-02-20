@@ -1,0 +1,16 @@
+{{ if eq .Values.redisStorage.isPersisted true }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  capacity:
+    storage: {{ .Values.redisStorage.volumeSize }}
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: {{ .Values.redisStorage.serverIP }}
+    path: {{ .Values.redisStorage.path }}
+  
+{{ end }}

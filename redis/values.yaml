@@ -3,3 +3,4 @@ redisStorage:
  isPersisted: true
  serverIP: "192.168.56.108"
  path: "/nfsroot/redis"
+ volumeSize: "500Mi"

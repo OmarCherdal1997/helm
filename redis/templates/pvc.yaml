@@ -1,0 +1,12 @@
+{{ if eq .Values.redisStorage.isPersisted true }}
+apiVersion: v1 
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+        storage: {{ .Values.redisStorage.volumeSize }} 
+{{ end }}
