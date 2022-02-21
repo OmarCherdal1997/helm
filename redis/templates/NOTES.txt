@@ -1,2 +1,2 @@
 redis:
-   Internal DNS : redis-{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local
+   Internal DNS : {{ .Release.Name }}-svc.{{ .Release.Namespace }}.svc.cluster.local

@@ -1,0 +1,20 @@
+{{ if eq .Values.redisBackup.isBackuped true }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-backup
+  namespace: {{ .Release.Namespace }}
+  annotations:
+     "helm.sh/hook": pre-upgrade
+     "helm.sh/hook-weight": "-2"
+     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  capacity:
+    storage: {{ .Values.redisBackup.volumeSize }}
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: {{ .Values.redisBackup.serverIP }}
+    path: {{ .Values.redisBackup.path }}
+  
+{{ end }}

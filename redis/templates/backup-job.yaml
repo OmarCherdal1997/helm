@@ -1,0 +1,30 @@
+{{ if eq .Values.redisBackup.isBackuped true }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: {{ .Release.Name }}-backup
+  annotations:
+    "helm.sh/hook": pre-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: redis:alpine
+        name: {{ .Release.Name }}-backup
+        command: [ sh, "-c", "redis-cli -h redis-{{ .Release.Name }}-svc.{{ .Release.Namespace }}.svc.cluster.local -a {{ .Values.redis_password }} --rdb dump.rdb save && ls -la && mv dump.rdb /backup/dump-{{ .Release.Revision }}.rdb && rm -f /data/dump.rdb"]
+        volumeMounts:
+          - name: backup
+            mountPath: /backup
+      volumes:
+        - name: backup
+          persistentVolumeClaim:  
+           claimName:  {{ .Release.Name }}-backup
+          
+status: {}
+{{ end }}

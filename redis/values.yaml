@@ -1,4 +1,9 @@
 redis_password: "mypassword"
+redisBackup:
+  isBackuped: false #true
+  serverIP: "192.168.56.108"
+  path: "/nfsroot/redis_backup"
+  volumeSize: "900Mi"
 redisStorage:
  isPersisted: true
  serverIP: "192.168.56.108"
