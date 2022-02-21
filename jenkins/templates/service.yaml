@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Name }}
+spec:
+  type: NodePort
+  ports:
+  - port: {{ .Values.image_http_port }}
+    protocol: TCP
+    targetPort: {{ .Values.image_http_port }}
+    name: httpd
+  - port: {{ .Values.image_jnlp_port }}
+    protocol: TCP
+    targetPort: {{ .Values.image_jnlp_port }}
+    name: jnlp
+  selector:
+    app: {{ .Release.Name }}
+status:
+  loadBalancer: {}

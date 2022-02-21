@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      serviceAccountName: jenkins-admin
+      containers:
+      - image: jenkins/{{ .Values.image_name }}:{{ .Values.image_tag }}
+        name: {{ .Release.Name }}
+        ports:
+        - containerPort: {{ .Values.image_http_port }}
+          name: http
+        - containerPort: {{ .Values.image_jnlp_port }}
+          name: jnlp
+        resources: {}
+        volumeMounts:
+          - name: home
+            mountPath: /var/{{ .Release.Name }}_home
+
+      volumes:
+         - name: home
+           persistentVolumeClaim:
+              claimName: {{ .Release.Name }}-home            
+status: {}
