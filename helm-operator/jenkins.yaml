@@ -2,13 +2,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: jenkins
-  namespace: jenkins
+  namespace: default
 spec:
   releaseName: jenkins
   helmVersion: v3
   chart:
     git: git@github.com:OmarCherdal1997/helm.git
-    ref: master
+    ref: main
     path: jenkins
   values:
     replicaCount: 1
