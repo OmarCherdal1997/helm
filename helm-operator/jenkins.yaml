@@ -16,4 +16,5 @@ spec:
     image_name: "jenkins"
     image_http_port: 8080
     image_jnlp_port: 50000
+    replicaCount: 2
 

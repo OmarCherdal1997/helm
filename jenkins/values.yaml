@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 1
 image_tag: "lts-jdk11" # "2.60.3" # "2.32.2"
 image_name: "jenkins"
 image_http_port: 8080
