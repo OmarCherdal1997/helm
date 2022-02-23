@@ -1,0 +1,12 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  releaseName: jenkins
+  helmVersion: v3
+  chart:
+    git: git@github.com:OmarCherdal1997/helm.git
+    ref: master
+    path: jenkins
