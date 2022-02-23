@@ -6,8 +6,12 @@ image:
   repository: fluxcd/helm-operator
   tag: 1.2.0
 pullPolicy: IfNotPresent
-  git:
+git:
   ssh:
     secretName: "helm-ssh"
     known_hosts: ""
 statusUpdateInterval: 60s
+
+
+
+# helm install -n flux helm-operator fluxcd/helm-operator -f operator-value.yaml
