@@ -10,6 +10,7 @@ image_jnlp_port: 50000
 persistance:
  isenabled: true
  storage_size: 500Mi #1Gi
+ mountPath: /var/jenkins_home
  storage_access_mode: ReadWriteOnce
  persistance_type: nfs
  persistance_sever: 192.168.56.108

@@ -34,8 +34,10 @@ spec:
           name: jnlp
         resources: {}
         volumeMounts:
+          {{- if eq .Values.persistance.isenabled true }}
           - name: home
-            mountPath: /var/{{ .Release.Name }}_home
+            mountPath: {{ .Values.persistance.mountPath }}
+          {{- end }}
           {{- if eq .Values.jcasc.isenabled true }}
           - name: jcasc
             mountPath: {{ .Values.jcasc.mountPath }}
@@ -47,7 +49,9 @@ spec:
            configMap: 
               name: {{ .Release.Name }}-jcasc-config
          {{- end }}
+         {{- if eq .Values.persistance.isenabled true }}
          - name: home
            persistentVolumeClaim:
-              claimName: {{ .Release.Name }}-home            
+              claimName: {{ .Release.Name }}-home   
+         {{- end }}         
 status: {}
