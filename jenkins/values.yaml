@@ -7,6 +7,12 @@ image_tag: "lts-jdk11" # "2.60.3" # "2.32.2"
 image_name: "jenkins"
 image_http_port: 8080
 image_jnlp_port: 50000
+persistance:
+ isenabled: true
+ storage_size: 500Mi #1Gi
+ storage_access_mode: ReadWriteOnce
+ persistance_type: nfs
+ persistance_sever: 192.168.56.108
 jcasc:
   isenabled: true
   mountPath: /var/jenkins_conf

@@ -18,7 +18,7 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
-      serviceAccountName: jenkins-admin
+      serviceAccountName: {{ .Release.Name }}-admin
       containers:
       - image: jenkins/{{ .Values.image_name }}:{{ .Values.image_tag }}
         name: {{ .Release.Name }}

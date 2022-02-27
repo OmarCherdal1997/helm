@@ -1,3 +1,5 @@
+{{ WIth .Values.persistance }}
+{{ if eq .isenabled true }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -5,7 +7,11 @@ metadata:
   namespace: {{ .Release.Name }}
 spec:
   accessModes:
-  - ReadWriteOnce
+  - {{ .storage_access_mode }}
   resources:
     requests:
-      storage: 900Mi
+      storage: {{ .storage_size }}
+
+{{ end }}
+
+{{ end }}
