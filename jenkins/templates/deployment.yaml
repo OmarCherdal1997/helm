@@ -22,6 +22,11 @@ spec:
       containers:
       - image: jenkins/{{ .Values.image_name }}:{{ .Values.image_tag }}
         name: {{ .Release.Name }}
+        env:
+          {{- if eq .Values.jcasc.isenabled true }}
+          - name: CASC_JENKINS_CONFIG
+            value: {{ .Values.jcasc.mountPath }}
+          {{- end }}
         ports:
         - containerPort: {{ .Values.image_http_port }}
           name: http
@@ -31,8 +36,17 @@ spec:
         volumeMounts:
           - name: home
             mountPath: /var/{{ .Release.Name }}_home
+          {{- if eq .Values.jcasc.isenabled true }}
+          - name: jcasc
+            mountPath: {{ .Values.jcasc.mountPath }}
+          {{- end }}
 
       volumes:
+         {{- if eq .Values.jcasc.isenabled true }}
+         - name: jcasc
+           configMap: 
+              name: {{ .Release.Name }}-jcasc-config
+         {{- end }}
          - name: home
            persistentVolumeClaim:
               claimName: {{ .Release.Name }}-home            
