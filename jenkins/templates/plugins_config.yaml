@@ -6,6 +6,15 @@ metadata:
   namespace: {{ .Release.Name }}
 data:
   required_plugins.txt: | 
-  {{- range .Values.plugins.list }}
-{{.}}{{- end }}
+    ldap:latest
+    locale:latest
+    mailer:latest
+    matrix-auth:latest
+    matrix-project:latest
+    pam-auth:latest
+    active-directory:latest
+    artifactory:latest
+    build-failure-analyzer:latest
+    cloudbees-folder:latest
+    kubernetes:latest
 {{ end }}
