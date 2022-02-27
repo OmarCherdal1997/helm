@@ -7,53 +7,47 @@ metadata:
 data:
   jcasc-config.yaml: |
     jenkins:
-      clouds:
-        - kubernetes:
-            name: "advanced-k8s-config"
-            serverUrl: "https://avanced-k8s-config:443"
-            namespace: {{ .Release.Name  | quote }}
-            jenkinsUrl: "http://{{ .Values.host_ip }}:{{ .Values.service_host_port }}/"
-            jenkinsTunnel: "jenkinsTunnel"
-            containerCapStr: 42
-            maxRequestsPerHostStr: 64
-            retentionTimeout: 5
-            connectTimeout: 10
-            readTimeout: 20
-
-            templates:
-              - name: "k8s-agent"
-                namespace: {{ .Release.Name  | quote }}
-                label: "linux-x86_64"
-                nodeUsageMode: EXCLUSIVE
-                containers:
-                  - name: "jnlp"
-                    image: "jenkins/inbound-agent:latest"
-                    alwaysPullImage: true
-                    workingDir: "/home/jenkins"
-                    ttyEnabled: true
-                    resourceRequestCpu: "500m"
-                    resourceLimitCpu: "1000m"
-                    resourceRequestMemory: "1Gi"
-                    resourceLimitMemory: "2Gi"
-                volumes:
-                  - emptyDirVolume:
-                      memory: false
-                      mountPath: "/tmp"
-                idleMinutes: "1"
-                activeDeadlineSeconds: "120"
-                slaveConnectTimeout: "1000"
       agentProtocols:
       - "JNLP4-connect"
       - "Ping"
       authorizationStrategy:
         loggedInUsersCanDoAnything:
           allowAnonymousRead: false
+      clouds:
+      - kubernetes:
+          containerCap: 10
+          containerCapStr: "10"
+          name: "kubernetes"
+          namespace: {{ .Release.Name  | quote }}
+          templates:
+          - containers:
+            - args: "9999999"
+              command: "sleep"
+              image: "jenkins/inbound-agent:latest"
+              livenessProbe:
+                failureThreshold: 0
+                initialDelaySeconds: 0
+                periodSeconds: 0
+                successThreshold: 0
+                timeoutSeconds: 0
+              name: "jnlp"
+              resourceLimitCpu: "800m"
+              resourceLimitMemory: "250Mi"
+              resourceRequestCpu: "500m"
+              resourceRequestMemory: "100Mi"
+              workingDir: "/home/jenkins/agent"
+            id: "689d1022-3505-4b29-8b3f-bc8fdeafce56"
+            label: "worker"
+            name: "worker"
+            namespace: {{ .Release.Name  | quote }}
+            yamlMergeStrategy: "override"
       crumbIssuer:
         standard:
           excludeClientIPFromCrumb: false
       disableRememberMe: false
       labelAtoms:
       - name: "built-in"
+      - name: "worker"
       markupFormatter: "plainText"
       mode: NORMAL
       myViewsTabBar: "standard"
