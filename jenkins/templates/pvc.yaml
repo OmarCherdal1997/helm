@@ -1,10 +1,11 @@
+{{- $relname := .Release.Name -}}
 {{ with .Values.persistance }}
 {{ if eq .isenabled true }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-home
-  namespace: {{ .Release.Name }}
+  name: {{ $relname }}-home
+  namespace: {{ $relname }}
 spec:
   accessModes:
   - {{ .storage_access_mode }}
