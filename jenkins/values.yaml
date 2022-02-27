@@ -7,6 +7,8 @@ image_tag: "lts-jdk11" # "2.60.3" # "2.32.2"
 image_name: "jenkins"
 image_http_port: 8080
 image_jnlp_port: 50000
+host_ip: 192.168.56.108
+service_host_port: 31391
 persistance:
  isenabled: true
  storage_size: 500Mi #1Gi
@@ -17,6 +19,23 @@ persistance:
 jcasc:
   isenabled: true
   mountPath: /var/jenkins_conf
+plugins:
+  - configuration-as-code:latest
+  - credentials:latest
+  - eiffel-broadcaster:latest
+  - envinject-api:latest
+  - envinject:latest
+  - job-dsl:latest
+  - ldap:latest
+  - locale:latest
+  - mailer:latest
+  - matrix-auth:latest
+  - matrix-project:latest
+  - pam-auth:latest
+  - active-directory:latest
+  - artifactory:latest
+  - build-failure-analyzer:latest
+  - cloudbees-folder:latest
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
