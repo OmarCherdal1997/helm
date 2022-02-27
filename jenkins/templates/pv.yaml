@@ -1,4 +1,4 @@
-{{ WIth .Values.persistance }}
+{{ With .Values.persistance }}
 {{ if eq .isenabled true }}
 apiVersion: v1
 kind: PersistentVolume
