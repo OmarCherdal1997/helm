@@ -1,0 +1,11 @@
+{{ if eq .Values.plugins.enabled true }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-plugins-config
+  namespace: {{ .Release.Name }}
+data:
+  required_plugins.txt: | 
+  {{- range .Values.plugins.list }}
+{{.}}{{- end }}
+{{ end }}

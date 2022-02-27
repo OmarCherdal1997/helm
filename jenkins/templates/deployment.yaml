@@ -22,6 +22,7 @@ spec:
       containers:
       - image: jenkins/{{ .Values.image_name }}:{{ .Values.image_tag }}
         name: {{ .Release.Name }}
+        command: [sh,'-c',"jenkins-plugin-cli -f {{ .Values.plugins.jekinsRef }}/required_plugins.txt"]
         env:
           {{- if eq .Values.jcasc.isenabled true }}
           - name: CASC_JENKINS_CONFIG
@@ -42,12 +43,21 @@ spec:
           - name: jcasc
             mountPath: {{ .Values.jcasc.mountPath }}
           {{- end }}
+          {{- if eq .Values.plugins.enabled true }}
+          - name: jcasc
+            mountPath: {{ .Values.plugins.jekinsRef }}
+          {{- end }}
 
       volumes:
          {{- if eq .Values.jcasc.isenabled true }}
          - name: jcasc
            configMap: 
               name: {{ .Release.Name }}-jcasc-config
+         {{- end }}
+         {{- if eq .Values.plugins.enabled true }}
+         - name: plugins
+           configMap: 
+              name: {{ .Release.Name }}-plugins-config
          {{- end }}
          {{- if eq .Values.persistance.isenabled true }}
          - name: home

@@ -20,6 +20,9 @@ jcasc:
   isenabled: true
   mountPath: /var/jenkins_conf
 plugins:
+ enabled: true
+ jekinsRef: /usr/share/jenkins/ref
+ list:
   - configuration-as-code:latest
   - credentials:latest
   - eiffel-broadcaster:latest
