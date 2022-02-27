@@ -12,7 +12,7 @@ spec:
   capacity:
     storage: {{ .storage_size }}
   nfs:
-    path: /nfsroot/{{ .Release.Name }}_home
+    path: /nfsroot/{{ $relname }}_home
     server: {{ .persistance_sever }}
 
 {{ end }}
