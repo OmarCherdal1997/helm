@@ -22,7 +22,7 @@ spec:
       containers:
       - image: jenkins/{{ .Values.image_name }}:{{ .Values.image_tag }}
         name: {{ .Release.Name }}
-        command: [sh,'-c',"jenkins-plugin-cli -f {{ .Values.plugins.jekinsRef }}/required_plugins.txt"]
+        #command: [sh,'-c',"jenkins-plugin-cli -f {{ .Values.plugins.jekinsRef }}/required_plugins.txt"]
         env:
           {{- if eq .Values.jcasc.isenabled true }}
           - name: CASC_JENKINS_CONFIG

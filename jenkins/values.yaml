@@ -39,6 +39,7 @@ plugins:
   - artifactory:latest
   - build-failure-analyzer:latest
   - cloudbees-folder:latest
+  - kubernetes:latest
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
