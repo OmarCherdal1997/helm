@@ -20,8 +20,8 @@ sonarqube:
    SONARQUBE_JDBC_PASSWORD: yourpassword
  perstisted: true
  storage_access_mode: ReadWriteMany
- data_storage_size: 500mi
- extensions_storage_size: 200mi
+ data_storage_size: 500Mi
+ extensions_storage_size: 200Mi
  persistance_sever: 192.168.56.108 
 
 postgres:

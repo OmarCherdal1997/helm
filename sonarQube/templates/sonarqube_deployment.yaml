@@ -28,11 +28,11 @@ spec:
               protocol: TCP
           resources: 
             limits: 
-              cpu: {{ .Values.sonarqube.limit.cpu }}
-              memory: {{ .Values.sonarqube.limit.memory }}
+              cpu: {{ .Values.sonarqube.resources.limit.cpu }}
+              memory: {{ .Values.sonarqube.resources.limit.memory }}
             requests: 
-              cpu: {{ .Values.sonarqube.request.cpu }}
-              memory: {{ .Values.sonarqube.request.memory }}
+              cpu: {{ .Values.sonarqube.resources.request.cpu }}
+              memory: {{ .Values.sonarqube.resources.request.memory }}
           volumeMounts: 
             {{- if eq .Values.sonarqube.perstisted true }}
             - mountPath: /opt/sonarqube/data/
