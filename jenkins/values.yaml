@@ -20,7 +20,7 @@ jcasc:
   isenabled: true
   mountPath: /var/jenkins_conf
 plugins:
- enabled: true
+ enabled: false
  jekinsRef: /usr/share/jenkins/ref
  list:
   - configuration-as-code:latest
