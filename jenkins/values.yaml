@@ -17,7 +17,7 @@ persistance:
  persistance_type: nfs
  persistance_sever: 192.168.56.108
 jcasc:
-  isenabled: true
+  isenabled: false
   mountPath: /var/jenkins_conf
 plugins:
  enabled: false
