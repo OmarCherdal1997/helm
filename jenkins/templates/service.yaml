@@ -13,6 +13,7 @@ spec:
     protocol: TCP
     targetPort: {{ .Values.image_http_port }}
     name: httpd
+    nodePort: {{ .Values.service_host_port }}
   - port: {{ .Values.image_jnlp_port }}
     protocol: TCP
     targetPort: {{ .Values.image_jnlp_port }}
