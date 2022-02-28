@@ -29,7 +29,7 @@ postgres:
   tag: latest
   perstisted: true
   storage_access_mode: ReadWriteMany
-  storage_size: 500mi
+  storage_size: 500Mi
   persistance_sever: 192.168.56.108 
   replicaCount: 1
   port: 5432

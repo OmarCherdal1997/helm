@@ -22,8 +22,8 @@ spec:
           name: postgresdb
         env:
         {{- range $key, $value := .Values.postgres.env }}
-        - name: $key
-          value: $value
+        - name: {{ $key }}
+          value: {{ $value }}
         {{- end }}
         {{- if eq .Values.postgres.perstisted true }}
         volumeMounts:
