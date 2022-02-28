@@ -2,18 +2,43 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+sonarqube:
+ image: sonarqube
+ tag: latest
+ replicaCount: 1
+ port: 9000
+ resources:
+  limit:
+    cpu: 2000m
+    memory: 2048Mi
+  request:
+    cpu: 500m
+    memory: 1024Mi
+ env:
+   SONARQUBE_JDBC_USERNAME: sonarqube
+   SONARQUBE_JDBC_URL: "jdbc:postgresql://postgresdb:5432/sonardb"
+   SONARQUBE_JDBC_PASSWORD: yourpassword
+ perstisted: true
+ storage_access_mode: ReadWriteMany
+ data_storage_size: 500mi
+ extensions_storage_size: 200mi
+ persistance_sever: 192.168.56.108 
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
+postgres:
+  image: postgres
+  tag: latest
+  perstisted: true
+  storage_access_mode: ReadWriteMany
+  storage_size: 500mi
+  persistance_sever: 192.168.56.108 
+  replicaCount: 1
+  port: 5432
+  persistance_path: /var/lib/postgresql/data/
+  env:
+    POSTGRES_USER: sonarqube
+    POSTGRES_PASSWORD: "yourpassword"
+    POSTGRES_DB: "sonardb"
+    PGDATA: /var/lib/postgresql/data/sonardb
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

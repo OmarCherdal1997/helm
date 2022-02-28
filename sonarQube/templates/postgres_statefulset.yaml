@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-statefulset
+  namespace: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: postgresdb
+  serviceName: "postgresdb"
+  replicas: {{ .Values.postgres.replicaCount }}
+  template:
+    metadata:
+      labels:   
+        app: postgresdb
+    spec:
+      containers:
+      - name: postgres-pod
+        image: {{ .Values.postgres.image }}:{{ .Values.postgres.tag }}
+        ports:
+        - containerPort: {{ .Values.postgres.port }}
+          name: postgresdb
+        env:
+        {{- range $key, $value := .Values.postgres.env }}
+        - name: $key
+          value: $value
+        {{- end }}
+        {{- if eq .Values.postgres.perstisted true }}
+        volumeMounts:
+        - name: postgres-data
+          mountPath: {{ .Values.postgres.persistance_path}}
+        {{- end }}
+      volumes:
+      {{- if eq .Values.postgres.perstisted true }}
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-data
+      {{- end }}

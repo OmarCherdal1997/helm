@@ -1,0 +1,18 @@
+{{- $relname := .Release.Name -}}
+{{ with .Values.postgres }}
+{{ if eq .perstisted true }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-data
+  namespace: {{ $relname }}
+spec:
+  accessModes:
+  - {{ .storage_access_mode }}
+  resources:
+    requests:
+      storage: {{ .storage_size }}
+
+{{ end }}
+
+{{ end }}

@@ -1,0 +1,20 @@
+{{- $relname := .Release.Name -}}
+
+{{ with .Values.postgres }}
+{{ if eq .perstisted true }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-data
+spec:
+  accessModes:
+  - {{ .storage_access_mode }}
+  capacity:
+    storage: {{ .storage_size }}
+  nfs:
+    path: /nfsroot/postgres_data
+    server: {{ .persistance_sever }}
+
+{{ end }}
+
+{{ end }}

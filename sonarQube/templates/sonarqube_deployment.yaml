@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  labels: 
+    app: sonarqube-deployment
+  name: sonarqube
+  namespace: {{ .Release.Name }}
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: sonarqube
+  template:
+    metadata:
+      labels:
+        app: sonarqube  
+    spec: 
+      containers: 
+        - env: 
+            {{- range $key, $value := .Values.sonarqube.env }}
+            - name: $key
+              value: $value
+            {{- end }}
+          image: {{ .Values.sonarqube.image }}:{{ .Values.sonarqube.tag }}
+          name: sonarqube-pod
+          ports: 
+            - containerPort: {{ .Values.sonarqube.port }}
+              protocol: TCP
+          resources: 
+            limits: 
+              cpu: {{ .Values.sonarqube.limit.cpu }}
+              memory: {{ .Values.sonarqube.limit.memory }}
+            requests: 
+              cpu: {{ .Values.sonarqube.request.cpu }}
+              memory: {{ .Values.sonarqube.request.memory }}
+          volumeMounts: 
+            {{- if eq .Values.sonarqube.perstisted true }}
+            - mountPath: /opt/sonarqube/data/
+              name: sonarqube-data
+            - mountPath: /opt/sonarqube/extensions/
+              name: sonarqube-extensions
+            {{- end }}
+      volumes: 
+        {{- if eq .Values.sonarqube.perstisted true }}
+        - name: sonarqube-data
+          persistentVolumeClaim: 
+            claimName: sonaqube-data-pvc
+        - name: sonarqube-extensions
+          persistentVolumeClaim: 
+            claimName: sonaqube-extensions-pvc
+        {{- end }}

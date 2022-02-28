@@ -1,0 +1,18 @@
+{{- $relname := .Release.Name -}}
+{{ with .Values.sonarqube }}
+{{ if eq .perstisted true }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonaqube-extensions-pvc
+  namespace: {{ $relname }}
+spec:
+  accessModes:
+  - {{ .storage_access_mode }}
+  resources:
+    requests:
+      storage: {{ .extensions_storage_size }}
+
+{{ end }}
+
+{{ end }}
