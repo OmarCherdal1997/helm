@@ -2,11 +2,19 @@
 
 {{ with .Values.sonarqube }}
 {{ if eq .perstisted true }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: sonarqube-extensions
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: sonaqube-extensions
+  name: sonarqube-extensions
 spec:
+  storageClassName: sonarqube-extensions
   accessModes:
   - {{ .storage_access_mode }}
   capacity:
