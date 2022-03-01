@@ -10,10 +10,10 @@ sonarqube:
  resources:
   limit:
     cpu: 2000m
-    memory: 2048Mi
+    memory: 3048Mi
   request:
     cpu: 500m
-    memory: 1024Mi
+    memory: 2048Mi
  env:
    SONARQUBE_JDBC_USERNAME: sonarqube
    SONARQUBE_JDBC_URL: "jdbc:postgresql://postgresdb:5432/sonardb"
