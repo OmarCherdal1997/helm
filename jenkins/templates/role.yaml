@@ -25,6 +25,13 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - events
+  verbs:
+  - list
+  - get
+- apiGroups:
+  - ""
+  resources:
   - secrets
   verbs:
   - get
