@@ -14,6 +14,9 @@ spec:
       labels:
         app: elasticsearch
     spec:
+      volumes:
+        - name: data
+          emptyDir: {}
       containers:
       - name: elasticsearch
         image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
@@ -64,14 +67,14 @@ spec:
         command: ["sh", "-c", "ulimit -n 65536"]
         securityContext:
           privileged: true
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-      labels:
-        app: elasticsearch
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: do-block-storage
-      resources:
-        requests:
-          storage: 100Gi
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: data
+  #     labels:
+  #       app: elasticsearch
+  #   spec:
+  #     accessModes: [ "ReadWriteOnce" ]
+  #     storageClassName: do-block-storage
+  #     resources:
+  #       requests:
+  #         storage: 100Gi
